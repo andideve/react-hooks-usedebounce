@@ -1,6 +1,6 @@
 # react-hooks-usedebounce
 
-desc
+React hook for callback debouncing
 
 ## Installation
 
@@ -23,7 +23,7 @@ function App() {
     [
       1000, // delay in ms
       keyword, // watched value(s), wrap it into an array if you have more dependencies
-    ]
+    ],
   );
 
   const handleQueryChange = (event) => {
