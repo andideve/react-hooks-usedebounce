@@ -1,6 +1,6 @@
 import React from 'react';
 
-const useDebounce = (callback: () => void, [ms, deps]: [number, readonly any[] | any]) => {
+const useDebounce = (callback: () => void, [ms, deps]: [number, readonly unknown[] | unknown]) => {
   const dependencyList = React.useMemo(() => (Array.isArray(deps) ? deps : [deps]), [deps]);
 
   const [isWaiting, setIsWaiting] = React.useState(false);
