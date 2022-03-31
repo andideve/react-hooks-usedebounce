@@ -1,11 +1,24 @@
 import React from 'react';
 
-const useDebounce = (callback: () => void, [ms, deps]: [number, readonly unknown[] | unknown]) => {
-  const dependencyList = React.useMemo(() => (Array.isArray(deps) ? deps : [deps]), [deps]);
+export interface DebounceOptions {
+  preventInitialRender?: boolean;
+}
 
+const useDebounce = (
+  callback: () => void,
+  [ms, deps]: [number, React.DependencyList],
+  { preventInitialRender = true }: DebounceOptions = {},
+) => {
   const [isWaiting, setIsWaiting] = React.useState(false);
 
+  const skipFirstRef = React.useRef(preventInitialRender);
+
   React.useEffect(() => {
+    if (skipFirstRef.current) {
+      skipFirstRef.current = false;
+      return undefined;
+    }
+
     let callbackReturn: unknown = null;
 
     const timeoutId = setTimeout(() => {
@@ -18,7 +31,7 @@ const useDebounce = (callback: () => void, [ms, deps]: [number, readonly unknown
       setIsWaiting(true);
       if (typeof callbackReturn === 'function') callbackReturn();
     };
-  }, dependencyList);
+  }, deps);
 
   return { isWaiting } as const;
 };

@@ -22,8 +22,9 @@ function App() {
     () => setResults([]),
     [
       1000, // delay in ms
-      keyword, // watched value(s), wrap it into an array if you have more dependencies
+      [keyword], // watched values
     ],
+    // options here
   );
 
   const handleQueryChange = (event) => {
@@ -33,5 +34,15 @@ function App() {
   return <main>{/* Some contents */}</main>;
 }
 ```
+
+## Options
+
+### options.preventInitialRender
+
+Type: `Boolean`
+
+Default: `true`
+
+Skip to function call on first render.
 
 [MIT License](LICENSE)
